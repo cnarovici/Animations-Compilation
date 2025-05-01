@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'animation_1_bouncing_pixel_ball.dart';
+import 'animation_1_bouncing_loading_icon.dart';
 import 'animation_2_flashing_power_up.dart';
-import 'animation_3_pacdot_spin.dart';
+import 'animation_3_pacman_spin.dart';
 import 'animation_4_chomping_pacman.dart';
-import 'animation_5_ghost_fade.dart';
-import 'animation_6_TBD.dart';
-import 'animation_7_TBD.dart';
-import 'animation_8_TBD.dart';
+import 'animation_5_game_over.dart';
+import 'animation_6_sound_wave_bars.dart';
+import 'animation_7_pacman_size.dart';
+import 'animation_8_you_win.dart';
 
 
 void main() {
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Colors.black,
         primarySwatch: Colors.purple,
-        fontFamily: 'PressStart2P', // Make sure to add this font in pubspec.yaml
+        fontFamily: 'PressStart2P', //!! NOTE TO SELF Make sure to add this font in pubspec.yaml !!
       ),
       home: AnimationListScreen(),
     );
@@ -37,21 +37,21 @@ class MyApp extends StatelessWidget {
 
 class AnimationListScreen extends StatelessWidget {
   final List<_AnimationItem> animations = [
-    _AnimationItem('Bouncing Pixel Ball', Animation1()),
-    _AnimationItem('Flashing Power-Up', Animation2()),
-    _AnimationItem('PacSpin', Animation3()),
-    _AnimationItem('Pacman Chomp', Animation4()),
+    _AnimationItem('Bouncing Loading Icon', Animation1()),
+    _AnimationItem('Flashing Cherry Power-Up', Animation2()),
+    _AnimationItem('PacSPIN', Animation3()),
+    _AnimationItem('PacCHOMP', Animation4()),
     _AnimationItem('GAME OVER', Animation5()),
-    _AnimationItem('TBD', Animation6()),
-    _AnimationItem('TBD', Animation7()),
-    _AnimationItem('TBD', Animation8())
+    _AnimationItem('Sound Wave Bars', Animation6()),
+    _AnimationItem('PacGROW', Animation7()),
+    _AnimationItem('You Win!', Animation8())
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('ArcadeFX Animations'),
+        title: Text('Arcade Animations'),
         centerTitle: true,
       ),
       body: Padding(
@@ -106,7 +106,6 @@ class _AnimationItem {
   _AnimationItem(this.title, this.screen);
 }
 
-// Define each custom transition animation
 Widget _slideFromBottomTransition(BuildContext context, Animation<double> animation,
     Animation<double> secondaryAnimation, Widget child) {
   return SlideTransition(

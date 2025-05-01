@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'dart:async';
 
 class Animation5 extends StatefulWidget {
   @override
@@ -9,23 +10,25 @@ class Animation5 extends StatefulWidget {
 class _Animation5State extends State<Animation5> {
   double _dx = 0;
   double _dy = 0;
+  Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    _startGlitch();
-  }
-
-  void _startGlitch() async {
     final rng = Random();
-    while (mounted) {
-      await Future.delayed(Duration(milliseconds: 100));
+    _timer = Timer.periodic(Duration(milliseconds: 100), (_) {
       if (!mounted) return;
       setState(() {
-        _dx = (rng.nextDouble() - 0.5) * 20; // jitter -10 to +10
+        _dx = (rng.nextDouble() - 0.5) * 20;
         _dy = (rng.nextDouble() - 0.5) * 20;
       });
-    }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -39,7 +42,7 @@ class _Animation5State extends State<Animation5> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Glitchy Game Over\n\nAn implicit animation mimicking a distorted GAME OVER screen using random offset updates and Transform.translate.',
+                'Game is Over\n\nAn implicit animation imitating a glitching game has ended screen using random offset updates.',
                 style: TextStyle(fontSize: 14),
               ),
             ),

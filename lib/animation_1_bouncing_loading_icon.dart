@@ -88,7 +88,8 @@ class _Animation1State extends State<Animation1> with SingleTickerProviderStateM
           Flexible(
             flex: 2,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AnimatedBuilder(
                   animation: _animation,
@@ -99,14 +100,14 @@ class _Animation1State extends State<Animation1> with SingleTickerProviderStateM
                     );
                   },
                   child: Image.asset(
-                    'images/final_loading.jpg', // Ensure this file is added in pubspec.yaml
+                    'images/final_loading.jpg',
                     width: 150,
                     height: 150,
                   ),
                 ),
                 SizedBox(height: 20),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
                       onPressed: _togglePause,

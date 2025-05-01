@@ -31,9 +31,11 @@ class _Animation4State extends State<Animation4> with SingleTickerProviderStateM
   }
 
   void _toggleReverse() {
-    setState(() {
-      isReversed = !isReversed;
-    });
+    if (!isPaused) {
+      setState(() {
+        isReversed = !isReversed;
+      });
+    }
   }
 
   @override
@@ -46,7 +48,7 @@ class _Animation4State extends State<Animation4> with SingleTickerProviderStateM
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ghost Slide-In'),
+        title: Text('Pac-Man Chomping'),
       ),
       body: Row(
         children: [
@@ -55,7 +57,7 @@ class _Animation4State extends State<Animation4> with SingleTickerProviderStateM
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Pacman Slide-In\n\nAn explicit animation of Pacman sliding side to side using Transform and AnimationController. Includes pause, resume, and reverse functionality.',
+                'Pac-Man Chomping\n\nAn explicit animation of Pac-Man moving side to side as if he was trying to eat pac-dots.',
                 style: TextStyle(fontSize: 12),
               ),
             ),
@@ -68,10 +70,7 @@ class _Animation4State extends State<Animation4> with SingleTickerProviderStateM
                 AnimatedBuilder(
                   animation: _controller,
                   builder: (context, child) {
-                    final dx = isReversed
-                        ? 150 - (_controller.value * 150)
-                        : _controller.value * 150;
-
+                    final dx = isReversed ? 150 - (_controller.value * 150) : _controller.value * 150;
                     return Transform.translate(
                       offset: Offset(dx, 0),
                       child: child,

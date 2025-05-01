@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class Animation2 extends StatelessWidget {
   @override
@@ -14,7 +15,7 @@ class Animation2 extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Flashing Power-Up\n\nAn implicit animation that simulates a glowing cherry power-up using AnimatedOpacity. The cherry flashes in and out.',
+                'Flashing Power-Up\n\nAn implicit animation that simulates a glowing cherry power-up about to expire.',
                 style: TextStyle(fontSize: 14),
               ),
             ),
@@ -36,6 +37,7 @@ class FlashingPowerUp extends StatefulWidget {
 
 class _FlashingPowerUpState extends State<FlashingPowerUp> {
   double _opacity = 1.0;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -43,14 +45,19 @@ class _FlashingPowerUpState extends State<FlashingPowerUp> {
     _startFlashing();
   }
 
-  void _startFlashing() async {
-    while (mounted) {
-      await Future.delayed(Duration(milliseconds: 500));
+  void _startFlashing() {
+    _timer = Timer.periodic(Duration(milliseconds: 500), (_) {
       if (!mounted) return;
       setState(() {
         _opacity = _opacity == 1.0 ? 0.3 : 1.0;
       });
-    }
+    });
+  }
+
+  @override
+  void dispose() { // tests kept failing because timer would persist for all my implicit animations
+    _timer?.cancel();
+    super.dispose();
   }
 
   @override

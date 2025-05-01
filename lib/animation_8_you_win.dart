@@ -1,6 +1,6 @@
-import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'dart:math';
+import 'dart:async';
 
 class Animation8 extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class Animation8 extends StatefulWidget {
 class _Animation8State extends State<Animation8> {
   double _scale = 1.0;
   Color _tint = Colors.orangeAccent;
-  late Timer _flickerTimer;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -20,9 +20,10 @@ class _Animation8State extends State<Animation8> {
 
   void _startFlicker() {
     final rng = Random();
-    _flickerTimer = Timer.periodic(Duration(milliseconds: 150), (_) {
+    _timer = Timer.periodic(Duration(milliseconds: 150), (_) {
+      if (!mounted) return;
       setState(() {
-        _scale = 0.9 + rng.nextDouble() * 0.3; // between 0.9 and 1.2
+        _scale = 0.9 + rng.nextDouble() * 0.3;
         _tint = rng.nextBool() ? Colors.deepOrange : Colors.yellowAccent;
       });
     });
@@ -30,14 +31,14 @@ class _Animation8State extends State<Animation8> {
 
   @override
   void dispose() {
-    _flickerTimer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Pixel Flame Flicker')),
+      appBar: AppBar(title: Text('You Win! Flicker')),
       body: Row(
         children: [
           Flexible(
@@ -45,7 +46,7 @@ class _Animation8State extends State<Animation8> {
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                'Pixel Flame Flicker\n\nThis animation simulates a classic arcade-style flame by scaling and tinting a flame PNG in rapid bursts.',
+                'You Win! Flicker\n\nAn implicit animation that imitates an arcade-style winning screen by scaling and tinting a PNG randomly.',
                 style: TextStyle(fontSize: 14),
               ),
             ),
